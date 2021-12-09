@@ -24,6 +24,9 @@ function CategoryCard({
                  justifyContent: 'flex-end',
                  ...containerStyle
              }}
+             imageStyle={{
+                 borderRadius: SIZES.radius
+             }}
             >
                 {/* Category Title */}
                 <Text
