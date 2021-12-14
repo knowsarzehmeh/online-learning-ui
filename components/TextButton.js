@@ -29,7 +29,9 @@ function TextButton({
                  ...FONTS.h3,
                  ...labelStyle
              }}
-            >{label}</Text>
+            >
+                {label}
+            </Text>
         </TouchableOpacity>
     )
 }

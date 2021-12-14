@@ -7,6 +7,8 @@ import {
     ScrollView
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/native';
+
 import { CategoryCard, HorizontalCourseCard, IconButton, LineDivider, TextButton, VerticalCourseCard } from '../../components';
 import { COLORS, SIZES, FONTS, icons, images, dummyData, constants} from '../../constants'
 
@@ -54,6 +56,8 @@ const Section = ({
 
 
 const Home = () => {
+
+    const navigation = useNavigation()
 
     function renderHeader() {
         return (
@@ -200,11 +204,19 @@ const Home = () => {
                         ({item, index}) => {
                             return (
                                 <CategoryCard 
+                                sharedElementPrefix="Home"
                                 category={item} 
                                 containerStyle={{
                                     marginLeft: index === 0 ? SIZES.padding : SIZES.base,
                                     marginRight: index === dummyData.categories.length - 1 ?  SIZES.padding : 0
                                 }}
+                                onPress={() => navigation.navigate({
+                                    name: 'CourseListing',
+                                    params: {
+                                        category: item,
+                                        sharedElementPrefix: 'Home'
+                                    }
+                                }) }
                                 />
                             )
                         }

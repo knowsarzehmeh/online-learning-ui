@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     Animated
 } from 'react-native'
+import { connect } from 'react-redux'
 
 import  { COLORS, FONTS, SIZES } from '../constants'
 
@@ -13,7 +14,8 @@ function ProfileRadioButton({
  icon,
  label,
  isSelected,
- onPress
+ onPress,
+ appTheme
 }) {
 
 
@@ -30,22 +32,12 @@ function ProfileRadioButton({
     })
 
     React.useEffect(() => {
-       
-        if(isSelected) {
+
             Animated.timing(radioAnimated, {
-                toValue: 17,
+                toValue: isSelected ? 17 : 0,
                 duration: 300,
                 useNativeDriver: false
             }).start()
-        } else {
-            Animated.timing(radioAnimated, {
-                toValue: 0,
-                duration: 300,
-                useNativeDriver: false
-            }).start()
-
-        }
-
 
     },[isSelected])
 
@@ -67,7 +59,7 @@ function ProfileRadioButton({
                  alignItems: 'center',
                  justifyContent: 'center',
                  borderRadius: 20,
-                 backgroundColor: COLORS.additionalColor11,
+                 backgroundColor: appTheme?.backgroundColor3,
              }}
             >
                      <Image 
@@ -90,7 +82,8 @@ function ProfileRadioButton({
             >
                  <Text
                   style={{
-                      ...FONTS.h3
+                      ...FONTS.h3,
+                      color: appTheme?.textColor
                   }}
                  >
                      {label}
@@ -126,7 +119,7 @@ function ProfileRadioButton({
                        borderRadius: 15,
                        borderWidth: 5,
                        borderColor: circleColorAnimated,
-                       backgroundColor: COLORS.white
+                       backgroundColor: appTheme?.backgroundColor1
                    }}
                 
                 />
@@ -135,4 +128,10 @@ function ProfileRadioButton({
     )
 }
 
-export default ProfileRadioButton
+function mapStateToProps(state) {
+    return {
+        appTheme: state.theme.appTheme,
+        error: state.theme.error
+    }
+}
+export default  connect(mapStateToProps)(ProfileRadioButton)

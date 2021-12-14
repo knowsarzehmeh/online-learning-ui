@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text, View, Image, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
 
 import {COLORS, FONTS, SIZES, icons } from '../constants'
 
@@ -7,7 +8,8 @@ function ProfileValue({
     icon,
     label,
     value,
-    onPress
+    onPress,
+    appTheme 
 }) {
     return (
         <TouchableOpacity
@@ -27,7 +29,7 @@ function ProfileValue({
                  alignItems: 'center',
                  justifyContent: 'center',
                  borderRadius: 20,
-                 backgroundColor: COLORS.additionalColor11,
+                 backgroundColor: appTheme?.backgroundColor3,
              }}
             >
                 <Image
@@ -68,6 +70,7 @@ function ProfileValue({
                     <Text
                     style={{
                         ...FONTS.h3,
+                        color: appTheme?.textColor
                     }}
                    >
                        {value}
@@ -81,7 +84,8 @@ function ProfileValue({
                  resizeMode='contain'
                  style={{
                      width: 15,
-                     height: 15
+                     height: 15,
+                     tintColor: appTheme?.tintColor
                  }}
                 />
             
@@ -89,4 +93,11 @@ function ProfileValue({
     )
 }
 
-export default ProfileValue
+function mapStateToProps(state) {
+    return {
+        appTheme: state.theme.appTheme,
+        error: state.theme.error
+    }
+}
+
+export default connect(mapStateToProps)(ProfileValue)
