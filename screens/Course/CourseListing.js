@@ -79,10 +79,21 @@ function CourseListing({
 
         const headerHideOnScrollAnimatedStyle = useAnimatedStyle(() => {
             return {
-                opacity: interpolate(scrollY.value, [80, 0], [ 1, 0 ], Extrapolate.CLAMP),
+                opacity: interpolate(scrollY.value, [80, 0], [ 0, 1 ], Extrapolate.CLAMP),
                 transform: [
                     {
-                        translateY: interpolate(scrollY.value, inputRange, [200, 0], Extrapolate.CLAMP)
+                        translateY: interpolate(scrollY.value, inputRange, [0, 200], Extrapolate.CLAMP)
+                    }
+                ]
+            }
+        })
+
+        const headerShowOnScrollAnimatedStyle = useAnimatedStyle(() => {
+            return {
+                opacity: interpolate(scrollY.value, [80, 0], [1, 0], Extrapolate.CLAMP),
+                transform: [
+                    {
+                        translateY: interpolate(scrollY.value, inputRange, [ 50, 130], Extrapolate.CLAMP )
                     }
                 ]
             }
@@ -121,6 +132,24 @@ function CourseListing({
                </SharedElement>
 
                {/* Title */}
+               <Animated.View
+                 style={[{
+                     position: 'absolute',
+                     top: -80,
+                     left: 0,
+                     right: 0,
+                 },
+                 headerShowOnScrollAnimatedStyle
+                ]}
+               >
+                   <Text
+                    style={{
+                        color: COLORS.white,
+                        textAlign: 'center',
+                        ...FONTS.body2,
+                    }}
+                   >{category?.title}</Text>
+               </Animated.View>
                <Animated.View
                  style={[{
                      position: 'absolute',
@@ -168,7 +197,15 @@ function CourseListing({
                          backgroundColor: COLORS.white,
                      }}
                      onPress={() => {
-                         backHandler();
+                        setTimeout(() => {
+                            headerSharedValue.value = withTiming(80, {
+                                duration: 500,
+                            }, () => {
+                                runOnJS(backHandler)()
+                            } )
+                       
+
+                        }, 100);
                      }}
                     />
                </Animated.View>
