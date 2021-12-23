@@ -197,15 +197,28 @@ function CourseListing({
                          backgroundColor: COLORS.white,
                      }}
                      onPress={() => {
-                        setTimeout(() => {
-                            headerSharedValue.value = withTiming(80, {
-                                duration: 500,
-                            }, () => {
-                                runOnJS(backHandler)()
-                            } )
-                       
 
-                        }, 100);
+                        if(scrollY.value > 0 && scrollY.value <= 200) {
+                            flatListRef.current?.scrollToOffset({
+                                offset: 0,
+                                animated: true
+                            })
+
+                            setTimeout(() => {
+                                headerSharedValue.value = withTiming(80, {
+                                    duration: 500,
+                                }, () => {
+                                    runOnJS(backHandler)()
+                                } )
+                           
+    
+                            }, 100);
+                        }
+                        else {
+                            backHandler()
+                        }
+
+                        
                      }}
                     />
                </Animated.View>

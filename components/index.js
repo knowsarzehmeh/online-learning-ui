@@ -1,4 +1,5 @@
 import CategoryCard from './CategoryCard'
+import FilterModal from './FilterModal'
 import HorizontalCourseCard from './HorizontalCourseCard'
 import IconButton from './IconButton'
 import IconLabel from './IconLabel'
@@ -11,6 +12,7 @@ import VerticalCourseCard from './VerticalCourseCard'
 
 export {
     CategoryCard,
+    FilterModal,
     HorizontalCourseCard,
     IconButton,
     IconLabel,
